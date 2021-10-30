@@ -131,17 +131,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
               Credenciais c = crList[index];
               return Dismissible(
                 key:  UniqueKey(),
-                child: GestureDetector(
-                    onTap: () => _onClickIrTelaAdicionar(c: c),
-                    onLongPress: () {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        duration: const Duration(seconds: 1),
-                        content: Text("Copiado ${c.site} ${c.senha}"),
-                      ));
-                      Clipboard.setData(ClipboardData(text: c.senha));
-                    },
-                    child: _itemCard(c, index)
-                ),
+                child: _itemCard(c, index),
                 onDismissed: (DismissDirection direction) {
                   if(index==0) {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -179,29 +169,39 @@ class _PasswordScreenState extends State<PasswordScreen> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
+      child: GestureDetector(
+        onTap: () => _onClickIrTelaAdicionar(c: c),
+        onLongPress: () {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            duration: const Duration(seconds: 1),
+            content: Text("Copiado ${c.site} ${c.senha}"),
+          ));
+          Clipboard.setData(ClipboardData(text: c.senha));
+        },
         child: Row(
           children: [
             Expanded(
-                child: Text("${c.site}",
-                    textAlign: TextAlign.start,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w600,
-                        fontSize: 18))),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: Text("${c.site}",
+                      textAlign: TextAlign.start,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18)),
+                )),
             Expanded(
                 child: Text(
-                    _listPasswordVisible[index] ? "${c.senha}" : "*****",
+                    _listPasswordVisible[index] ? "${c.senha}" : "●●●●●",
                     textAlign: TextAlign.right,
                     style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 18))),
             ConstrainedBox(
               constraints: const BoxConstraints(
-                maxWidth: 40,
+                maxWidth: 50,
               ),
-              child: Container(
-                alignment: Alignment.centerRight,
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
                 child: IconButton(
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
