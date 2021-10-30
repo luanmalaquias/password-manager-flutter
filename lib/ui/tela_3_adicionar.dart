@@ -60,12 +60,14 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
             TextFormField(
               enabled: _siteEnable,
               controller: _siteControler,
+              autofocus: widget.c == null ? true : false,
               validator: (value) => _validarCredenciais(value, "site"),
               decoration: const InputDecoration(
                   labelText: "Site/Plataforma",
                   hintText: "ex: Google")),
             TextFormField(
               controller: _senhaControler,
+              autofocus: widget.c != null ? true : false,
               validator: (value) => _validarCredenciais(value, "senha"),
               decoration: const InputDecoration(
                   labelText: "Senha",
@@ -76,10 +78,10 @@ class _AddPasswordScreenState extends State<AddPasswordScreen> {
                   onPressed: (){
                     _senhaControler.text = gerarSenha(10);
                   },
-                  child: const Text("Quero outra"))),
+                  child: Text(widget.c == null ? "Quero outra" : "Gerar outra"))),
                 Expanded(child: ElevatedButton(
                   onPressed: () => _onClickSaveCredenciais(),
-                  child: const Text("Quero essa!"))),
+                  child: Text(widget.c == null ? "Quero essa" : "Atualizar"))),
               ],
             )
           ],

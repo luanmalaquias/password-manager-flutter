@@ -122,7 +122,8 @@ class _PasswordScreenState extends State<PasswordScreen> {
     return Column(
       children: [
         _seachCard(),
-        ListView.builder(
+        Expanded(
+          child: ListView.builder(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             itemCount: crList.length,
@@ -159,7 +160,9 @@ class _PasswordScreenState extends State<PasswordScreen> {
                   });
                 },
               );
-            }),
+            }
+          ),
+        ),
       ],
     );
   }
@@ -174,7 +177,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
         onLongPress: () {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             duration: const Duration(seconds: 1),
-            content: Text("Copiado ${c.site} ${c.senha}"),
+            content: Text("Copiado ${c.site}"),
           ));
           Clipboard.setData(ClipboardData(text: c.senha));
         },
